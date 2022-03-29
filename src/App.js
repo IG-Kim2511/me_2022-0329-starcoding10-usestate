@@ -38,27 +38,62 @@ function App() {
       <button onClick={handleClick}>setState</button>
       
 
-      <App2></App2>
+      <App2/>
     </h3>
   );
 }
 
 
-
-const App2 = () => {
+function App2() {
 
   // 🍀 js0442. input에 입력한 정보,  list에 rendering
   const [name, setName] = useState(["Jaff","Finch"])
+
+  // 🍀 js0456. input value...inputState에 넣기 + console.log
+  
+  const [inputState, setInputState] = useState("")
+
+   // js0456.
+  const handleInput =(e)=>{
+    setInputState (e.target.value);
+  }
+  console.log("inputState :" + inputState )
+
+
+  // 🍀 js0504. 
+  /* 🦄setState((~a~~)=>{~})
+
+    ~a~ 안에는 업로드하기 전 state의 값이 들어가 있음
+   */
+
+  const handleUpload =()=>{
+
+     setName((prevState)=>{
+      console.log("이전 state: ", prevState);
+
+      return [inputState, ...prevState];
+    });
+  }
 
   return (
     <h3>
       <h2>  input에 입력한 정보,  list에 추가하기 </h2>
 
-      <input type="text" />
+      {/* js0456 */}
+      {/* 
+        파라미터에 함수 그대로 넣은 때 :  (글자 타이핑할때, 버튼클릭할때...등등  )모든작업에 계속해서 함수를 호출하고있음 👉 시스템에 안좋음
+        콜백함수로 넣어주면, 처음에 렌더링 될때 한번만 함수호출함. (더 좋음)
+      */}
 
-      <button>upload</button>
+      <input type="text"  value={inputState} onChange={handleInput}/>
+      
+      
+      {/* js0504 */}
+      <button onClick={handleUpload}> upload</button>
 
       <p>list: </p>
+
+
 
       {/* js0442 */}
       {
