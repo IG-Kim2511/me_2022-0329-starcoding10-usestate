@@ -27,7 +27,7 @@ function App() {
   }
 
   return (
-    <h3>
+    <div>
       <h1>useState</h1>
       <h2>basic state & useState</h2>
 
@@ -39,15 +39,37 @@ function App() {
       
 
       <App2/>
-    </h3>
+    </div>
   );
+}
+
+
+
+ // js0519
+//  🦄 return 넣어야 함
+const heavyWork =()=>{
+
+  return ["Jeff","Finch"];
+
+  console.log('밖으로 빼낸 변수')
 }
 
 
 function App2() {
 
   // 🍀 js0442. input에 입력한 정보,  list에 rendering
-  const [name, setName] = useState(["Jaff","Finch"])
+  // const [name, setName] = useState(["Jeff","Finch"])
+  
+  // 🍀 js0519. const...밖으로 빼서 사용하기 +  렌더링할때 한번만 실행되게 하기
+
+  // 🍉 js0519-2. 파라미터에 함수 그대로 넣은 때 :  (글자 타이핑할때, 버튼클릭할때...등등  )모든작업에 계속해서 함수를 호출하고있음 👉 시스템에 안좋음
+  // const [name, setName] = useState(heavyWork);
+ 
+  // 🍉 js0519-3. 콜백함수로 넣어주면, 처음에 렌더링 될때 한번만 함수호출함. (더 좋음)
+  const [name, setName] = useState(()=>{
+    return heavyWork();
+  });
+
 
   // 🍀 js0456. input value...inputState에 넣기 + console.log
   
@@ -57,26 +79,26 @@ function App2() {
   const handleInput =(e)=>{
     setInputState (e.target.value);
   }
-  console.log("inputState :" + inputState )
+  // console.log("inputState :" + inputState )
 
 
   // 🍀 js0504. 
   /* 🦄setState((~a~~)=>{~})
-
-    ~a~ 안에는 업로드하기 전 state의 값이 들어가 있음
-   */
+    ~a~ 안에는 업로드하기 전 state의 값이 들어가 있음    
+  */
 
   const handleUpload =()=>{
 
      setName((prevState)=>{
       console.log("이전 state: ", prevState);
 
-      return [inputState, ...prevState];
+      return [inputState, ...prevState];      //🦄 return 넣어야 함
+
     });
   }
 
   return (
-    <h3>
+    <div>
       <h2>  input에 입력한 정보,  list에 추가하기 </h2>
 
       {/* js0456 */}
@@ -103,7 +125,7 @@ function App2() {
       }
     
     
-    </h3>
+    </div>
   )
 }
 
